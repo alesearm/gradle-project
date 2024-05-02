@@ -9,7 +9,9 @@ import com.indvd00m.ascii.render.api.IContextBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -32,22 +34,40 @@ public class App {
         IRender render = new Render();
         IContextBuilder builder = render.newBuilder();
         builder.width(120).height(20);
-        builder.element(new PseudoText("DevOps-Armin"));
+        builder.element(new PseudoText("Armin"));
         ICanvas canvas = render.render(builder.build());
         String s = canvas.getText();
         System.out.println(s);
 
 
     //PDFBox
+
+      
+
+
         PDDocument helloPdf = new PDDocument();
         PDPage page = new PDPage(PDRectangle.A4);
         helloPdf.addPage(page);
 
         PDPageContentStream contentStream = new PDPageContentStream(helloPdf, page);
+
+        // Laden der Schriftart aus dem resources-Ordner
+        InputStream fontStream = App.class.getResourceAsStream("/fonts/Cour.ttf");
+        PDType0Font font = PDType0Font.load(helloPdf, fontStream);
+
         contentStream.beginText();
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 36);
-        contentStream.newLineAtOffset(10, 100);
-        contentStream.showText("Hello PDF World. My Name is Armin!!!");
+        contentStream.setFont(font, 12);
+        contentStream.setLeading(10);
+        contentStream.newLineAtOffset(100, 700);
+
+
+        // Durchlaeuft alle Zeilen des ASCII-Texts und fügt sie zum Dokument hinzu
+        String[] lines = s.split("\n");
+        for (String line : lines) {
+            contentStream.showText(line);
+            contentStream.newLine();
+        }
+
         contentStream.endText();
         contentStream.close();
 
