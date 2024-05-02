@@ -10,7 +10,7 @@ import com.indvd00m.ascii.render.Render;
 
 public class App {
     public String getGreeting() {
-        return "Hello World!";
+        return "Hello World! My name is Armin";
     }
     
 
