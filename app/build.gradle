@@ -27,6 +27,9 @@ dependencies {
     // Ascii Render
     implementation 'com.indvd00m.ascii.render:ascii-render:2.2.0'
 
+    //PDFBox
+    implementation 'org.apache.pdfbox:pdfbox:3.0.1'
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
