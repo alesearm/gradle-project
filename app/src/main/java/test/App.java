@@ -17,6 +17,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
+import com.google.gson.Gson;
 import com.indvd00m.ascii.render.Render;
 
 public class App {
@@ -55,6 +56,17 @@ public class App {
         helloPdf.close();
 
 
+        User user = new User("Armin Alesevic", 30);
+
+        Gson gson = new Gson();
+
+        // Java-Objekt zu JSON konvertieren
+        String json = gson.toJson(user);
+        System.out.println("JSON representation: " + json);
+
+        // JSON zu Java-Objekt konvertieren
+        User newUser = gson.fromJson(json, User.class);
+        System.out.println("User: " + newUser.getName() + ", Age: " + newUser.getAge());
 
     }
 }
